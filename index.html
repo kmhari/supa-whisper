@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supa Whisper — Speak, Transcribe, Paste</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #1f1f23;
+            --text: #e4e4e7;
+            --text-muted: #71717a;
+            --accent: #a78bfa;
+            --accent-glow: rgba(167, 139, 250, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Nav */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 32px;
+        }
+        h1 {
+            font-size: clamp(40px, 6vw, 56px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        h1 span { color: var(--accent); }
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 460px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+        .cta-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #0a0a0b;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            border-color: #2a2a30;
+            background: #1a1a1e;
+        }
+
+        /* Mockup */
+        .mockup {
+            margin: 60px auto 0;
+            max-width: 560px;
+            aspect-ratio: 16 / 10;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        .mockup::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, var(--accent-glow), transparent 70%);
+        }
+        .mockup-text { position: relative; z-index: 1; }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .feature {
+            padding: 28px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            transition: border-color 0.2s;
+        }
+        .feature:hover { border-color: #2a2a30; }
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        .feature h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+        .feature p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* How it works */
+        .how {
+            padding: 0 0 80px;
+            text-align: center;
+        }
+        .section-label {
+            font-size: 13px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 48px;
+        }
+        .steps {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+        }
+        .step {
+            flex: 1;
+            max-width: 200px;
+            text-align: center;
+        }
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .step h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .step p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* CTA */
+        .bottom-cta {
+            padding: 60px 0 80px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .bottom-cta h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        .bottom-cta p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { flex-direction: column; align-items: center; }
+            .hero { padding: 60px 0 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <div class="logo">Supa Whisper</div>
+        <a href="https://github.com/kmhari/supa-whisper" class="nav-link">GitHub</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <div class="badge">macOS only &middot; Free &amp; open source</div>
+        <h1>Speak. <span>Transcribe.</span> Paste.</h1>
+        <p class="subtitle">A tiny macOS app that turns your voice into text instantly. Hit a shortcut, talk, and your words appear wherever you type.</p>
+        <div class="cta-group">
+            <a href="https://github.com/kmhari/supa-whisper/releases/latest" class="btn btn-primary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download for macOS
+            </a>
+            <a href="https://github.com/kmhari/supa-whisper" class="btn btn-secondary">
+                View Source
+            </a>
+        </div>
+        <div class="mockup">
+            <span class="mockup-text">App screenshot goes here</span>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">&#9000;</div>
+                <h3>Global Hotkey</h3>
+                <p>Press &#8984;&#8679;Space from anywhere to start recording. No need to switch apps.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#9889;</div>
+                <h3>Instant Transcription</h3>
+                <p>Powered by Deepgram's Nova 2 model for fast, accurate speech-to-text.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#9998;</div>
+                <h3>Auto-Paste</h3>
+                <p>Transcribed text is automatically pasted into your active app. Zero friction.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#9670;</div>
+                <h3>Lives in the Menu Bar</h3>
+                <p>No dock icon, no clutter. Supa Whisper stays out of your way until you need it.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how">
+    <div class="container">
+        <p class="section-label">How it works</p>
+        <h2 class="section-title">Three steps. That's it.</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>Press the shortcut</h4>
+                <p>&#8984;&#8679;Space to summon the recording window</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>Speak</h4>
+                <p>Talk naturally. Your audio is transcribed in real time.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>Done</h4>
+                <p>Text is pasted into your active app automatically.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bottom-cta">
+    <div class="container">
+        <h2>Try Supa Whisper today</h2>
+        <p>Free, open source, and built for macOS.</p>
+        <a href="https://github.com/kmhari/supa-whisper/releases/latest" class="btn btn-primary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download for macOS
+        </a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        &copy; 2025 F22 Labs &middot; <a href="https://github.com/kmhari/supa-whisper" class="nav-link">GitHub</a>
+    </div>
+</footer>
+
+</body>
+</html>
