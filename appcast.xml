@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>SupaWhisper Updates</title>
+    <link>https://kmhari.github.io/supa-whisper/appcast.xml</link>
+    <description>Most recent changes with links to updates.</description>
+    <language>en</language>
+    <item>
+      <title>Version 1.0.4</title>
+      <description><![CDATA[
+<h2>SupaWhisper 1.0.4</h2>
+<ul>
+<li><b>Deepgram Nova-3:</b> transcription now uses Deepgram's newest general-purpose model.</li>
+<li><b>Mic turns off between dictations:</b> the microphone runs only while you're recording. The orange mic indicator goes away when you stop, and Bluetooth headsets return to full audio quality.</li>
+</ul>
+      ]]></description>
+      <pubDate>Tue, 13 Oct 2026 09:29:18 +0000</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.0.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+      <enclosure
+        url="https://github.com/kmhari/supa-whisper/releases/download/v1.0.4/SupaWhisper.dmg"
+        sparkle:edSignature="943Bu9lAHsJP21lYNxHIbTs5dfMYhCw9km3awDpZpS/h5PGKUE1bT1KP0jk8hDQCSeBNMTgj8xPkGxAMZiJ0Bg==" length="3731083"
+        type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>
